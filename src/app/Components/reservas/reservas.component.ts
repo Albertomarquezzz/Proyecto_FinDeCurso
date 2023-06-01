@@ -36,6 +36,7 @@ export class ReservasComponent implements OnInit {
   idUsuario: string = 'mi-id';
   emailUsuario: string = 'mi-email';
   hora!: string;
+  strinVacio!: string;
 
   elegirHora = false;
   mensajeElegirHora = false;
@@ -99,6 +100,7 @@ export class ReservasComponent implements OnInit {
         const docReff = doc(this.firestore, 'Reservas', idDocumento);
         this.getDataUsuario();
         this.getData();
+        this.hora = this.strinVacio;
         updateDoc(docRef, { ID: idDocumento })
           .then(() => {
           })

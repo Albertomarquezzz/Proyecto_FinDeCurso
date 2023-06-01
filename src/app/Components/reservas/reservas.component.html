@@ -1,0 +1,125 @@
+<div class="container mb-5" style="margin-top: 120px;">  
+    <div *ngIf="!admin">
+        <div id="bajar">
+            <p-divider>
+                <h3>Reservar</h3>
+            </p-divider>
+        </div>
+        <div class="row mb-5">
+            <div class="text-center">
+                <p-calendar 
+                 
+                [(ngModel)]="date"
+                 [disabledDays]="[0,6]" [showIcon]="true"></p-calendar>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="text-center">
+                <button type="button" (click)="horasDisponibles()"
+                class="btn btn-dark elegant-button" data-bs-toggle="modal" data-bs-target="#timeModal">
+                    Elegir Hora
+                </button>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="text-center">
+                <p *ngIf="mensajeElegirHora" style="color: rgb(255, 0, 0); text-align: center;">Debes elegir una hora antes de reservar</p>
+                <button class="btn btn-dark elegant-button" (click)="addData(date)">Reservar Cita</button>
+            </div>
+        </div>
+    </div>
+    <p-divider>
+        <h3>Reservas</h3>
+    </p-divider>
+    <p-card>
+        <!-- Tabla de Admin -->
+        <table *ngIf="admin">
+            <thead>
+                <tr>
+                    <th>Gmail</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of reservas| async">
+                    <td>{{data.Gmail}}</td>
+                    <td>{{data.Fecha.toDate() | date:'yyyy/MM/dd'}}</td>
+                    <td>{{data.Fecha.toDate() | date:'h:mm a'}}</td>
+                    <td>
+                        <button pButton type="button" icon="pi pi-trash" iconPos="right" class="p-button-danger" (click)="eliminarDocumento(data.ID)"></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- Tabla de Admin -->
+        <!-- Tabla de Usuario -->
+        <p-table *ngIf="!admin" [value]="reservasUsuarios | async"
+        [paginator]="true"
+        [rows]="7"
+        [showCurrentPageReport]="true"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[7, 14, 21]">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Gmail</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Eliminar</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-reserva>
+                <tr>
+                    <td>{{reserva.Gmail}}</td>
+                    <td>{{reserva.Fecha.toDate() | date:'yyyy/MM/dd'}}</td>
+                    <td>{{reserva.Fecha.toDate() | date:'h:mm a'}}</td>
+                    <td>
+                        <button pButton type="button" icon="pi pi-trash" iconPos="right" class="p-button-danger" (click)="eliminarDocumento(reserva.ID)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <!-- Tabla de Usuario -->   
+    </p-card>
+</div>
+
+<div class="modal fade" id="timeModal" tabindex="-1" aria-labelledby="timeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="timeModalLabel">Seleccionar hora</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="list-group">
+            <tr *ngFor="let data of allHoursAvailable">
+                <button type="button" class="list-group-item list-group-item-action" (click)="hora = data" (click)="elegirHora = true" data-bs-dismiss="modal">{{data}} {{ +data > 12 ? 'PM' : 'AM' }}</button>
+            </tr>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- <table *ngIf="!admin">
+    <thead>
+        <tr>
+            <th>Gmail</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of reservasUsuarios| async">
+            <td>{{data.Gmail}}</td>
+            <td>{{data.Fecha.toDate() | date:'yyyy/MM/dd'}}</td>
+            <td>{{data.Fecha.toDate() | date:'h:mm a'}}</td>
+            <td>
+                <button pButton type="button" icon="pi pi-trash" iconPos="right" class="p-button-danger" (click)="eliminarDocumento(data.ID)"></button>
+            </td>
+        </tr>
+    </tbody>
+</table> -->

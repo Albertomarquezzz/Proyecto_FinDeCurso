@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+</head>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+                <p-tabView>
+                    <p-tabPanel header="Login">
+
+                        <form [formGroup]="formLogin" (ngSubmit)="onSubmitLogin()">
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="text" placeholder="Email" class="form-control" formControlName="email">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                <input type="password" placeholder="Password" class="form-control" formControlName="password">
+                            </div>
+                            <p style="color: rgb(255, 0, 0); text-align: center;">{{this.mensajeErrorLogin}}</p>
+                            <button type="submit" value="Enviar">Login</button>
+                        </form>
+
+                    </p-tabPanel>
+
+                    <p-tabPanel header="Register" (ngSubmit)="addData(f)">
+
+                        <form [formGroup]="formReg" (ngSubmit)="onSubmit()">
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="text" name="password" placeholder="Email" class="form-control" formControlName="email">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                <input type="password" name="password" placeholder="Password" class="form-control" formControlName="password" [(ngModel)]="this.contrasenaRegister">
+                            </div>
+                            <p style="color: rgb(255, 0, 0); text-align: center;">{{this.mensajeErrorRegister}}</p>
+                            <button type="submit" value="Enviar">Register</button>
+                        </form>
+
+                    </p-tabPanel>
+                </p-tabView>
+        </div>
+    </div>
+</div>
+</html>

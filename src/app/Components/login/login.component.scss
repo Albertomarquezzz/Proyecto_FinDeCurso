@@ -100,11 +100,11 @@ button{
 
 @media screen and (max-width: 767px) {
   :host ::ng-deep .p-tabview {
-    height: 560px;
-    width: 350px;
+    height: 80%;
+    width: 90%;
     position: absolute;
     transform: translate(-50%,-50%);
-    top: 60%;
+    top: 59%;
     left: 50%;
     border-radius: 10px;
     backdrop-filter: blur(10px);

@@ -125,3 +125,9 @@ nav a:hover {
 	display: block;
 	margin: 20px auto;
 }
+
+@media screen and (max-width: 767px) {
+	body{
+		margin-top: 80px;
+	}
+  }

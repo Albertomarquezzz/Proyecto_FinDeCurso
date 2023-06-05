@@ -116,11 +116,27 @@ button{
 }
 @media screen and (min-width: 767px) and (max-width: 1200px) {
   :host ::ng-deep .p-tabview {
-    height: 91%;
+    height: 81%;
     width: 50%;
     position: absolute;
     transform: translate(-50%,-50%);
     top: 55%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
+    background-color: #38383a;
+  }
+}
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+  :host ::ng-deep .p-tabview {
+    height: 85%;
+    width: 50%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 56%;
     left: 50%;
     border-radius: 10px;
     backdrop-filter: blur(10px);

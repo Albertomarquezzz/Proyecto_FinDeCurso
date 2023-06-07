@@ -7,6 +7,7 @@
                     <ul>
                         <li><button class="botones" (click)="this.irInicio()">Inicio</button></li>
                         <li><button class="botones" (click)="this.irReservas()">Reservas</button></li>
+                        <li><button class="botones" (click)="this.irSobreNosotros()">Sobre Nosotros</button></li>
                         <li *ngIf="!this.usuarioLogueado" ><button class="botones" (click)="this.irLogin()">Identificarse</button></li>
                         <li *ngIf="this.usuarioLogueado"><button class="botones" (click)="this.onClickLogout()">Cerrar Sesion</button></li>
                     </ul>

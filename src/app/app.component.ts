@@ -29,7 +29,9 @@ export class AppComponent {
       }
     });
   }
-
+  irSobreNosotros() {
+    this.router.navigate(['informacion']);
+  }
   irReservas() {
     this.router.navigate(['reservas']);
   }

@@ -21,13 +21,15 @@ import { getAuth } from 'firebase/auth';
 import {TableModule} from 'primeng/table';
 import { CardModule } from 'primeng/card';
 import { MessagesModule } from 'primeng/messages';
+import { InformacionComponent } from './Components/informacion/informacion.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     InicioComponent,
-    ReservasComponent
+    ReservasComponent,
+    InformacionComponent
   ],
   imports: [
     BrowserModule,

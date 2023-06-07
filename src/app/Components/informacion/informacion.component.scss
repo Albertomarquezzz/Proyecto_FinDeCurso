@@ -3,9 +3,11 @@
 	margin: 30px 0;
 	font-weight: 500;
 }
+
 p {
 	font-size: 20px;
 }
+
 .row {
 	display: flex;
 	justify-content: center;
@@ -38,9 +40,75 @@ iframe {
 	width: 100%;
 }
 
-.ubicacion{
+.ubicacion {
 	display: flex;
 	justify-content: center;
 	background-color: #333;
 	padding: 10px;
+}
+
+@media screen and (max-width: 767px) {
+	.presentacion {
+		font-size: 20px;
+		margin: 20px 0;
+		font-weight: 500;
+	}
+
+	p {
+		font-size: 16px;
+	}
+
+	.row {
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		gap: 20px;
+		margin-bottom: 30px;
+	}
+
+	.contenido {
+		background-color: #f5f5f5;
+		border-radius: 5px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		flex-direction: column;
+		align-items: center;
+	}
+	
+	.contenido h2 {
+		text-align: center;
+		font-size: 24px;
+		font-weight: bold;
+		color: #333;
+	}
+	
+	.contenido p {
+		font-size: 14px;
+		color: #666;
+	} 
+
+	h2 {
+		font-size: 20px;
+		font-weight: bold;
+		color: #333;
+		margin-bottom: 10px;
+	}
+
+	p {
+		font-size: 14px;
+		color: #666;
+		margin-bottom: 8px;
+	}
+
+	iframe {
+		width: 100%;
+		height: 300px;
+	}
+
+	.ubicacion {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: #333;
+		padding: 10px;
+	}
 }

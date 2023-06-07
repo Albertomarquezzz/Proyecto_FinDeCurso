@@ -4,13 +4,17 @@
             <div class="container">
                 <h1>PeluCitas</h1>
                 <nav>
-                    <ul>
+                    <ul *ngIf="!this.isScreenSmall">
                         <li><button class="botones" (click)="this.irInicio()">Inicio</button></li>
                         <li><button class="botones" (click)="this.irReservas()">Reservas</button></li>
                         <li><button class="botones" (click)="this.irSobreNosotros()">Sobre Nosotros</button></li>
                         <li *ngIf="!this.usuarioLogueado" ><button class="botones" (click)="this.irLogin()">Identificarse</button></li>
                         <li *ngIf="this.usuarioLogueado"><button class="botones" (click)="this.onClickLogout()">Cerrar Sesion</button></li>
                     </ul>
+                    <div *ngIf="this.isScreenSmall">
+                        <p-menu #menu [model]="items" [popup]="true"></p-menu>
+                        <button pButton type="button" (click)="menu.toggle($event)" icon="pi pi-bars"></button>
+                    </div>                    
                 </nav>
             </div>
         </header>

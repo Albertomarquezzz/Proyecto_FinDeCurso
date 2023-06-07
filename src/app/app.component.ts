@@ -1,7 +1,8 @@
-import { Component, Output, Input } from '@angular/core';
+import { Component, Output, Input, HostListener } from '@angular/core';
 import { LoginService } from './services/login.service';
 import { Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
+import { MenuItem } from 'primeng/api';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,8 +12,10 @@ import { Auth } from '@angular/fire/auth';
 export class AppComponent {
   title = 'Proyect';
 
+  items!: MenuItem[];
   tablaLoginBoolean = true;
   usuarioLogueado!: Boolean;
+  isScreenSmall!: boolean;
 
   constructor(
     private userService: LoginService,
@@ -21,6 +24,7 @@ export class AppComponent {
   ) { }
 
   ngOnInit() {
+    this.isScreenSmall = window.innerWidth < 768;
     this.auth.onAuthStateChanged((user) => {
       if (user) {
         this.usuarioLogueado = true;
@@ -28,6 +32,7 @@ export class AppComponent {
         this.usuarioLogueado = false;
       }
     });
+    this.llenarLista();
   }
   irSobreNosotros() {
     this.router.navigate(['informacion']);
@@ -47,6 +52,80 @@ export class AppComponent {
         this.router.navigate(['/inicio']);
       })
       .catch(error => console.log(error));
+  }
+  llenarLista() {
+    if (this.usuarioLogueado) {
+      this.items = [
+        {
+          label: 'Acciones',
+          items: [
+            {
+              label: 'Inicio',
+              icon: 'pi pi-refresh',
+              command: () => {
+                this.irInicio();
+              }
+            },
+            {
+              label: 'Reservas',
+              command: () => {
+                this.irReservas();
+              }
+            },
+            {
+              label: 'Sobre Nosotros',
+              command: () => {
+                this.irSobreNosotros();
+              }
+            },
+            {
+              label: 'Identificarse',
+              command: () => {
+                this.onClickLogout();
+              }
+            }
+          ]
+        }
+      ];
+    }
+    else if (!this.usuarioLogueado) {
+      this.items = [
+        {
+          label: 'Acciones',
+          items: [
+            {
+              label: 'Inicio',
+              command: () => {
+                this.irInicio();
+              }
+            },
+            {
+              label: 'Reservas',
+              command: () => {
+                this.irReservas();
+              }
+            },
+            {
+              label: 'Sobre Nosotros',
+              command: () => {
+                this.irSobreNosotros();
+              }
+            },
+            {
+              label: 'Identificarse',
+              command: () => {
+                this.irLogin();
+              }
+            }
+          ]
+        }
+      ];
+    }
+  }
+  @HostListener('window:resize', ['$event'])
+  onWindowResize(event: any) {
+    this.isScreenSmall = window.innerWidth < 768;
+    console.log(this.isScreenSmall)
   }
 }
 

@@ -22,6 +22,9 @@ import {TableModule} from 'primeng/table';
 import { CardModule } from 'primeng/card';
 import { MessagesModule } from 'primeng/messages';
 import { InformacionComponent } from './Components/informacion/informacion.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { MenuModule } from 'primeng/menu';
+import { MenubarModule } from 'primeng/menubar';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,9 @@ import { InformacionComponent } from './Components/informacion/informacion.compo
     TableModule,
     CardModule,
     MessagesModule,
+    DropdownModule,
+    MenuModule,
+    MenubarModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth())

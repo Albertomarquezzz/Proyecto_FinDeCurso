@@ -12,18 +12,22 @@ export class AppComponent {
   title = 'Proyect';
 
   tablaLoginBoolean = true;
-  identificado!: Boolean;
+  usuarioLogueado!: Boolean;
 
   constructor(
     private userService: LoginService,
-    private router: Router
+    private router: Router,
+    private auth: Auth
   ) { }
 
   ngOnInit() {
-    this.userService.miVariable$.subscribe(valor => {
-      this.identificado = valor;
+    this.auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.usuarioLogueado = true;
+      } else {
+        this.usuarioLogueado = false;
+      }
     });
-    console.log(this.identificado)
   }
 
   irReservas() {
@@ -39,7 +43,6 @@ export class AppComponent {
     this.userService.logout()
       .then(() => {
         this.router.navigate(['/inicio']);
-        this.userService.cambiarMiVariable(false);
       })
       .catch(error => console.log(error));
   }

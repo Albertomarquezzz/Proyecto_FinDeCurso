@@ -86,12 +86,11 @@ export class ReservasComponent implements OnInit {
 
   addData(f: any) {
 
-    this.date.setHours(this.hora);
-    this.date.setMinutes(0);
-    this.date.setSeconds(0);
-
-
-    if (this.elegirHora == true) {
+    if(this.elegirHora){
+      this.date.setHours(this.hora);
+      this.date.setMinutes(0);
+      this.date.setSeconds(0);
+  
       const collectionInstance = collection(this.firestore, 'Reservas');
       addDoc(collectionInstance, { Fecha: this.date, Gmail: this.userService.usuarioEmail, IDusuario: this.userService.usuarioID1 }).then((docRef) => {
         console.log('Datos Guardados')
@@ -101,6 +100,7 @@ export class ReservasComponent implements OnInit {
         this.getDataUsuario();
         this.getData();
         this.hora = this.strinVacio;
+        this.elegirHora = false
         updateDoc(docRef, { ID: idDocumento })
           .then(() => {
           })
@@ -110,6 +110,9 @@ export class ReservasComponent implements OnInit {
         .catch((err) => {
           console.log(err)
         })
+    }
+    else{
+      this.mensajeElegirHora = true;
     }
   }
 

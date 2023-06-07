@@ -13,6 +13,7 @@ export class AppComponent {
 
   tablaLoginBoolean = true;
   usuarioLogueado!: Boolean;
+  showMenu: boolean = false;
 
   constructor(
     private userService: LoginService,
@@ -40,6 +41,9 @@ export class AppComponent {
   }
   irInicio() {
     this.router.navigate(['inicio']);
+  }
+  toggleMenu() {
+    this.showMenu = !this.showMenu;
   }
   onClickLogout() {
     this.userService.logout()

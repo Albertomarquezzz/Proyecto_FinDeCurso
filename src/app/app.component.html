@@ -12,8 +12,14 @@
                         <li *ngIf="this.usuarioLogueado"><button class="botones" (click)="this.onClickLogout()">Cerrar Sesion</button></li>
                     </ul>
                     <div *ngIf="this.isScreenSmall">
-                        <p-menu #menu [model]="items" [popup]="true"></p-menu>
-                        <button pButton type="button" (click)="menu.toggle($event)" icon="pi pi-bars"></button>
+                        <div *ngIf="this.usuarioLogueado">
+                            <p-menu #menu [model]="items" [popup]="true"></p-menu>
+                            <button pButton type="button" (click)="menu.toggle($event)" icon="pi pi-bars"></button>
+                        </div>      
+                        <div *ngIf="!this.usuarioLogueado">
+                            <p-menu #menu [model]="items2" [popup]="true"></p-menu>
+                            <button pButton type="button" (click)="menu.toggle($event)" icon="pi pi-bars"></button>
+                        </div>                     
                     </div>                    
                 </nav>
             </div>

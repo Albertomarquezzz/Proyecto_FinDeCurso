@@ -13,6 +13,7 @@ export class AppComponent {
   title = 'Proyect';
 
   items!: MenuItem[];
+  items2!: MenuItem[];
   tablaLoginBoolean = true;
   usuarioLogueado!: Boolean;
   isScreenSmall!: boolean;
@@ -54,73 +55,69 @@ export class AppComponent {
       .catch(error => console.log(error));
   }
   llenarLista() {
-    if (this.usuarioLogueado) {
-      this.items = [
-        {
-          label: 'Acciones',
-          items: [
-            {
-              label: 'Inicio',
-              icon: 'pi pi-refresh',
-              command: () => {
-                this.irInicio();
-              }
-            },
-            {
-              label: 'Reservas',
-              command: () => {
-                this.irReservas();
-              }
-            },
-            {
-              label: 'Sobre Nosotros',
-              command: () => {
-                this.irSobreNosotros();
-              }
-            },
-            {
-              label: 'Identificarse',
-              command: () => {
-                this.onClickLogout();
-              }
+    this.items = [
+      {
+        label: 'Acciones',
+        items: [
+          {
+            label: 'Inicio',
+            command: () => {
+              this.irInicio();
             }
-          ]
-        }
-      ];
-    }
-    else if (!this.usuarioLogueado) {
-      this.items = [
-        {
-          label: 'Acciones',
-          items: [
-            {
-              label: 'Inicio',
-              command: () => {
-                this.irInicio();
-              }
-            },
-            {
-              label: 'Reservas',
-              command: () => {
-                this.irReservas();
-              }
-            },
-            {
-              label: 'Sobre Nosotros',
-              command: () => {
-                this.irSobreNosotros();
-              }
-            },
-            {
-              label: 'Identificarse',
-              command: () => {
-                this.irLogin();
-              }
+          },
+          {
+            label: 'Reservas',
+            command: () => {
+              this.irReservas();
             }
-          ]
-        }
-      ];
-    }
+          },
+          {
+            label: 'Sobre Nosotros',
+            command: () => {
+              this.irSobreNosotros();
+            }
+          },
+          {
+            label: 'Cerrar Sesion',
+            command: () => {
+              this.onClickLogout();
+            }
+          }
+        ]
+      }
+    ];
+
+    this.items2 = [
+      {
+        label: 'Acciones',
+        items: [
+          {
+            label: 'Inicio',
+            command: () => {
+              this.irInicio();
+            }
+          },
+          {
+            label: 'Reservas',
+            command: () => {
+              this.irReservas();
+            }
+          },
+          {
+            label: 'Sobre Nosotros',
+            command: () => {
+              this.irSobreNosotros();
+            }
+          },
+          {
+            label: 'Identificarse',
+            command: () => {
+              this.irLogin();
+            }
+          }
+        ]
+      }
+    ];
   }
   @HostListener('window:resize', ['$event'])
   onWindowResize(event: any) {

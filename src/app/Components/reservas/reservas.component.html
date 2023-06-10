@@ -30,32 +30,63 @@
         <h3>Reservas</h3>
     </p-divider>
     <p-card>
-        <button class="btn btn-dark elegant-button" (click)="verReservasPasadas = true" (click)="getDataUsuarioHechas()" (click)="getDataHechas()">Ver Reservas Pasadas</button>
-        <button class="btn btn-dark elegant-button" style="margin: 1%;" (click)="verReservasPasadas = false">Ver Reservas Pendientes</button>
+        <button class="btn btn-dark elegant-button" (click)="verReservasPasadas = true" (click)="getDataUsuarioHechas()" (click)="verReservasHoy = false" (click)="getDataHechas()">Ver Reservas Pasadas</button>
+        <button class="btn btn-dark elegant-button" style="margin: 1%;" (click)="verReservasPasadas = false" (click)="verReservasHoy = false">Ver Reservas Pendientes</button>
+        <button *ngIf="admin" class="btn btn-dark elegant-button" style="margin: 1%;" (click)="getDataHoy()" (click)="verReservasHoy = true" (click)="verReservasPasadas = false">Ver Reservas Hoy</button>
         <!-- Tabla de Admin -->
-        <div *ngIf="verReservasPasadas">
-            <p-table *ngIf="admin" [value]="reservasHechas | async" [paginator]="true" [rows]="7" [showCurrentPageReport]="true"
-            [tableStyle]="{ 'min-width': '50rem' }"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [rowsPerPageOptions]="[7, 14, 21]">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>Gmail</th>
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-reserva>
-                <tr>
-                    <td>{{reserva.Gmail}}</td>
-                    <td>{{reserva.Fecha.toDate() | date:'yyyy/MM/dd'}}</td>
-                    <td>{{reserva.Fecha.toDate() | date:'h:mm a'}}</td>
-                </tr>
-            </ng-template>
-            </p-table>
+        <div *ngIf="!verReservasHoy">
+            <div *ngIf="verReservasPasadas">
+                <p-table *ngIf="admin" [value]="reservasHechas | async" [paginator]="true" [rows]="7" [showCurrentPageReport]="true"
+                [tableStyle]="{ 'min-width': '50rem' }"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[7, 14, 21]">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Gmail</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-reserva>
+                    <tr>
+                        <td>{{reserva.Gmail}}</td>
+                        <td>{{reserva.Fecha.toDate() | date:'yyyy/MM/dd'}}</td>
+                        <td>{{reserva.Fecha.toDate() | date:'h:mm a'}}</td>
+                    </tr>
+                </ng-template>
+                </p-table>
+            </div>
         </div>
-        <div *ngIf="!verReservasPasadas">
-            <p-table *ngIf="admin" [value]="reservas | async" [paginator]="true" [rows]="7" [showCurrentPageReport]="true"
+        <div *ngIf="!verReservasHoy">
+            <div *ngIf="!verReservasPasadas">
+                <p-table *ngIf="admin" [value]="reservas | async" [paginator]="true" [rows]="7" [showCurrentPageReport]="true"
+                [tableStyle]="{ 'min-width': '50rem' }"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[7, 14, 21]">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Gmail</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-reserva>
+                    <tr>
+                        <td>{{reserva.Gmail}}</td>
+                        <td>{{reserva.Fecha.toDate() | date:'yyyy/MM/dd'}}</td>
+                        <td>{{reserva.Fecha.toDate() | date:'h:mm a'}}</td>
+                        <td>
+                            <button pButton type="button" icon="pi pi-trash" iconPos="right" class="p-button-danger"
+                                (click)="eliminarDocumento(reserva.ID)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <div *ngIf="verReservasHoy">
+            <p-table *ngIf="admin" [value]="reservasHoy | async" [paginator]="true" [rows]="7" [showCurrentPageReport]="true"
             [tableStyle]="{ 'min-width': '50rem' }"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [rowsPerPageOptions]="[7, 14, 21]">

@@ -31,6 +31,7 @@ export class ReservasComponent implements OnInit {
   date!: any;
   reservas!: Observable<any>;
   reservasHechas!: Observable<any>;
+  reservasHoy!: Observable<any>;
   fechasReservadas!: Observable<any>;
   admin!: Boolean;
   reservasUsuarios!: Observable<any>;
@@ -46,6 +47,7 @@ export class ReservasComponent implements OnInit {
   existeReserva = false;
 
   verReservasPasadas = false;
+  verReservasHoy = false;
 
   constructor(
     private firestore: Firestore,
@@ -126,6 +128,17 @@ export class ReservasComponent implements OnInit {
     const q = query(collectionInstance, where("Fecha", ">=", today), orderBy("Fecha", "desc"));
 
     this.reservas = collectionData(q);
+  }
+
+  getDataHoy() {
+    const collectionInstance = collection(this.firestore, 'Reservas');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const q = query(collectionInstance, where("Fecha", ">=", today), where("Fecha", "<", tomorrow), orderBy("Fecha", "desc"));
+  
+    this.reservasHoy = collectionData(q);
   }
 
   getDataHechas() {

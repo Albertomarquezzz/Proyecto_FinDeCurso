@@ -30,9 +30,11 @@ export class ReservasComponent implements OnInit {
 
   date!: any;
   reservas!: Observable<any>;
+  reservasHechas!: Observable<any>;
   fechasReservadas!: Observable<any>;
   admin!: Boolean;
   reservasUsuarios!: Observable<any>;
+  reservasUsuariosHechas!: Observable<any>;
   idUsuario: string = 'mi-id';
   emailUsuario: string = 'mi-email';
   hora!: string;
@@ -42,6 +44,8 @@ export class ReservasComponent implements OnInit {
   mensajeElegirHora = false;
   allHoursAvailable: string[] = [];
   existeReserva = false;
+
+  verReservasPasadas = false;
 
   constructor(
     private firestore: Firestore,
@@ -59,30 +63,9 @@ export class ReservasComponent implements OnInit {
     this.userService.comprobacionAdmin();
     this.getData()
 
-    this.getDataUsuario()
+    this.getDataUsuarioPorDelante()
     this.emailUsuario = this.userService.usuarioEmail
   }
-
-  // addData(f: any) {
-  //   this.date.setHours(this.hora);
-  //   this.date.setMinutes(0);
-  //   this.date.setSeconds(0);
-  //   const collectionInstance = collection(this.firestore, 'Reservas');
-  //   addDoc(collectionInstance, { Fecha: this.date, Gmail: this.userService.usuarioEmail, IDusuario: this.userService.usuarioID1 }).then((docRef) => {
-  //     console.log('Datos Guardados')
-  //     const idDocumento = docRef.id
-  //     this.mensajeElegirHora = false;
-  //     const docReff = doc(this.firestore, 'Reservas', idDocumento);
-  //     updateDoc(docRef, { ID: idDocumento })
-  //       .then(() => {
-  //       })
-  //       .catch((error) => {
-  //       });
-  //   })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // }
 
   addData(f: any) {
 
@@ -97,7 +80,7 @@ export class ReservasComponent implements OnInit {
         const idDocumento = docRef.id
         this.mensajeElegirHora = false;
         const docReff = doc(this.firestore, 'Reservas', idDocumento);
-        this.getDataUsuario();
+        this.getDataUsuarioPorDelante();
         this.getData();
         this.hora = this.strinVacio;
         this.elegirHora = false
@@ -138,11 +121,22 @@ export class ReservasComponent implements OnInit {
 
   getData() {
     const collectionInstance = collection(this.firestore, 'Reservas');
-    const q = query(collectionInstance, orderBy("Fecha", "desc"));
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const q = query(collectionInstance, where("Fecha", ">=", today), orderBy("Fecha", "desc"));
 
     this.reservas = collectionData(q);
-    console.log("reservastodas", this.reservas)
   }
+
+  getDataHechas() {
+    const collectionInstance = collection(this.firestore, 'Reservas');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const q = query(collectionInstance, where("Fecha", "<=", today), orderBy("Fecha", "desc"));
+
+    this.reservasHechas = collectionData(q);
+  }
+
 
   horasDisponibles() {
     const horsDisponibles = allHours as any[]
@@ -164,14 +158,22 @@ export class ReservasComponent implements OnInit {
     this.allHoursAvailable = horsDisponibles
   }
 
-  getDataUsuario() {
-    this.userService.VerIdUsuario()
+  getDataUsuarioPorDelante() {
+    this.userService.VerIdUsuario();
     const collectionInstance = collection(this.firestore, 'Reservas');
-    const q = query(collectionInstance, where("IDusuario", "==", this.userService.usuarioID1), orderBy("Fecha", "desc"));
-    collectionData(q)
-      .subscribe(val => {
-      })
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const q = query(collectionInstance, where("IDusuario", "==", this.userService.usuarioID1), where("Fecha", ">=", today), orderBy("Fecha", "desc"));
     this.reservasUsuarios = collectionData(q);
+  }
+
+  getDataUsuarioHechas() {
+    this.userService.VerIdUsuario();
+    const collectionInstance = collection(this.firestore, 'Reservas');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const q = query(collectionInstance, where("IDusuario", "==", this.userService.usuarioID1), where("Fecha", "<=", today), orderBy("Fecha", "desc"));
+    this.reservasUsuariosHechas = collectionData(q);
   }
 
 }
